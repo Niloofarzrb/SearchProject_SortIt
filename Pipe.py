@@ -15,6 +15,9 @@ class Pipe:
     def remove_ball(self):
         return self.stack.pop()
 
+    def get_last_color(self):
+        return self.stack[-1]
+
     def is_full(self):
         if len(self.stack) == self.limit:
             return True

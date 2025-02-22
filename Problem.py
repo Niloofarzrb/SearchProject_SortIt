@@ -17,7 +17,7 @@ class Problem:
     @staticmethod
     def is_goal(state: State) -> bool:  # this method check this state is goal or not
         for i in state.pipes:
-            if not i.is_one_color() or (not (i.is_full() or i.is_empty())):
+            if not i.is_one_color():
                 return False
         return True
 
@@ -29,9 +29,11 @@ class Problem:
                 if i == j:
                     continue
                 if not state.pipes[j].is_full() and not state.pipes[i].is_empty():
-                    s = State(copy.deepcopy(state.pipes), state, self.get_cost_from_change(state, i), (i, j))
-                    Action.change_between_two_pipe(s, i, j)
-                    child.append(s)
+                    if state.pipes[j].is_empty() or state.pipes[j].get_last_color() == state.pipes[i].get_last_color():
+                        s = State(copy.deepcopy(state.pipes), state,
+                                  self.get_cost_from_change(state, i), (i, j))
+                        Action.change_between_two_pipe(s, i, j)
+                        child.append(s)
         return child
 
     @staticmethod
@@ -43,7 +45,8 @@ class Problem:
     def get_state_for_gui(state: State):
         out = ""
         for i in range(len(state.pipes)):
-            out += 'p' + str(i + 1) + '=' + state.pipes[i].get_pipe_for_gui() + ','
+            out += 'p' + str(i + 1) + '=' + \
+                state.pipes[i].get_pipe_for_gui() + ','
         out = out[:len(out) - 1] + '\n'
         return out
 
