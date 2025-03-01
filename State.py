@@ -5,7 +5,10 @@ class State:
         self.parent = parent
         self.g_n = g_n
         self.prev_action = prev_action
+        self.__cost = -1
 
+    def set_cost(self, value: int):
+        self.__cost = value
 
     def __hash__(self):
         hash_strings = []
@@ -17,5 +20,11 @@ class State:
             hash_string += i + '###'
         return hash_string
 
-    def __lt__(self, other):
+    def __lt__(self, others):
         return 0
+
+    def h_n(self):
+        pass
+
+    def f_n(self):
+        pass
